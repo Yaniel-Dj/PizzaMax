@@ -8,7 +8,7 @@
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🍕</text></svg>">
 <style>
   * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', sans-serif; -webkit-tap-highlight-color: transparent; }
-  body { background: #0d0d0d; color: #e8e8e8; }
+  body { background: #0d0d0d; color: #e8e8e8; overflow-x: hidden; }
 
   /* ICONOS SVG EN BOTONES */
   .btn-icon {
@@ -224,7 +224,8 @@
     border-radius: 20px;
     z-index: 2;
   }
-  .pizza-card img { width: 100%; height: 220px; object-fit: cover; background: #2a2a2a; }
+  /* Cursor pointer en la imagen para indicar que se puede tocar */
+  .pizza-card img { width: 100%; height: 220px; object-fit: cover; background: #2a2a2a; cursor: pointer; }
   .pizza-info { padding: 25px; display: flex; flex-direction: column; flex: 1; }
   .pizza-info h4 { color: #ffca28; margin-bottom: 10px; font-size: 1.5rem; }
   .pizza-info p { color: #b0b0b0; font-size: .95rem; margin-bottom: 20px; flex: 1; }
@@ -271,28 +272,24 @@
     justify-content: center;
   }
   
-  /* CAMBIO: Botón WhatsApp con su onda */
   .floating-btn.wa {
     bottom: 25px;
     box-shadow: 0 6px 20px rgba(37, 211, 102, .5);
     animation: pulse-wa 2s infinite;
   }
 
-  /* CAMBIO: Botón SMS separado más arriba y con su propia onda */
   .floating-btn.sms {
-    bottom: 115px; /* Separado de 100px a 115px */
+    bottom: 115px;
     box-shadow: 0 6px 20px rgba(33, 150, 243, .5);
-    animation: pulse-sms 2s infinite; /* Añadida la animación de splash */
+    animation: pulse-sms 2s infinite;
   }
 
-  /* Animación para WhatsApp (Verde) */
   @keyframes pulse-wa {
     0% { box-shadow: 0 6px 20px rgba(37, 211, 102, .5), 0 0 0 0 rgba(37, 211, 102, .7); }
     70% { box-shadow: 0 6px 20px rgba(37, 211, 102, .5), 0 0 0 18px rgba(37, 211, 102, 0); }
     100% { box-shadow: 0 6px 20px rgba(37, 211, 102, .5), 0 0 0 0 rgba(37, 211, 102, 0); }
   }
 
-  /* Animación para SMS (Azul) */
   @keyframes pulse-sms {
     0% { box-shadow: 0 6px 20px rgba(33, 150, 243, .5), 0 0 0 0 rgba(33, 150, 243, .7); }
     70% { box-shadow: 0 6px 20px rgba(33, 150, 243, .5), 0 0 0 18px rgba(33, 150, 243, 0); }
@@ -305,9 +302,33 @@
     .hero p { font-size: 1.1rem; }
     .floating-btn { width: 60px; height: 60px; right: 20px; }
     .floating-btn.wa { bottom: 20px; }
-    .floating-btn.sms { bottom: 100px; } /* Separado en móvil también */
+    .floating-btn.sms { bottom: 100px; }
     .btn-icon-lg { width: 30px; height: 30px; }
     .top-banner { font-size: .85rem; padding: 8px 10px; }
+  }
+
+  /* ==================================================== */
+  /* ===== CSS DE LA ANIMACIÓN DE PIZZITAS (NUEVO) ===== */
+  /* ==================================================== */
+  .pizza-particle {
+    position: fixed;
+    font-size: 30px;
+    pointer-events: none; /* Evita que interfiera con clics */
+    z-index: 99999;
+    transform: translate(-50%, -50%);
+    animation: volar-pizza 0.9s cubic-bezier(0.25, 1, 0.5, 1) forwards;
+  }
+
+  @keyframes volar-pizza {
+    0% {
+      opacity: 1;
+      transform: translate(-50%, -50%) scale(1) rotate(0deg);
+    }
+    100% {
+      opacity: 0;
+      /* Usa variables CSS para calcular la trayectoria dinámica */
+      transform: translate(calc(-50% + var(--x)), calc(-50% + var(--y))) scale(0.2) rotate(var(--r));
+    }
   }
 
   /* ==================================================== */
@@ -738,28 +759,23 @@
 </a>
 
 <!-- ==================================================== -->
-<!-- ===== JAVASCRIPT ===== -->
+<!-- ===== JAVASCRIPT GENERAL Y ANIMACIONES ===== -->
 <!-- ==================================================== -->
 <script>
 document.addEventListener("DOMContentLoaded", () => {
+    // --- 1. LÓGICA DE LA PANTALLA DE CARGA ---
     const loader = document.getElementById("loading-screen");
-    
-    // Seleccionamos TODOS los enlaces que vayan a WhatsApp o SMS
     const actionLinks = document.querySelectorAll('a[href^="https://api.whatsapp.com"], a[href^="sms:"]');
     
     actionLinks.forEach(link => {
         link.addEventListener("click", function(e) {
-            // Mostramos el logo de carga al instante
             loader.classList.add("active");
-            
-            // Lo ocultamos después de 4 segundos
             setTimeout(() => {
                 loader.classList.remove("active");
             }, 4000); 
         });
     });
 
-    // Limpiar el logo si el usuario regresa a la página desde la app
     window.addEventListener("pageshow", function(event) {
         if (event.persisted || document.visibilityState === "visible") {
             loader.classList.remove("active");
@@ -771,6 +787,55 @@ document.addEventListener("DOMContentLoaded", () => {
             loader.classList.remove("active");
         }
     });
+
+    // --- 2. LÓGICA DE LA EXPLOSIÓN DE PIZZITAS ---
+    // Seleccionamos todas las imágenes de las tarjetas de pizza
+    const pizzaImages = document.querySelectorAll('.pizza-card img');
+
+    pizzaImages.forEach(img => {
+        img.addEventListener('click', function(e) {
+            // Obtenemos la posición exacta del clic/toque
+            const clickX = e.clientX || (e.touches && e.touches[0].clientX);
+            const clickY = e.clientY || (e.touches && e.touches[0].clientY);
+
+            // Creamos 10 pizzitas voladoras en cada clic
+            for (let i = 0; i < 10; i++) {
+                createPizzaParticle(clickX, clickY);
+            }
+        });
+    });
+
+    function createPizzaParticle(x, y) {
+        const particle = document.createElement('div');
+        particle.classList.add('pizza-particle');
+        particle.textContent = '🍕'; // Emoji de pizza
+
+        // Calculamos una trayectoria aleatoria (ángulo y distancia)
+        const angle = Math.random() * Math.PI * 2; // Ángulo de 0 a 360 grados
+        const distance = 60 + Math.random() * 120; // Distancia entre 60px y 180px
+        
+        // Calculamos la posición final en X e Y
+        const moveX = Math.cos(angle) * distance;
+        const moveY = Math.sin(angle) * distance;
+
+        // Rotación aleatoria para que parezca que dan vueltas
+        const rotation = (Math.random() - 0.5) * 720; // Entre -360 y 360 grados
+
+        // Asignamos las variables CSS para la animación
+        particle.style.left = `${x}px`;
+        particle.style.top = `${y}px`;
+        particle.style.setProperty('--x', `${moveX}px`);
+        particle.style.setProperty('--y', `${moveY}px`);
+        particle.style.setProperty('--r', `${rotation}deg`);
+
+        // Añadimos la partícula al body
+        document.body.appendChild(particle);
+
+        // Eliminamos la partícula después de que termine la animación (0.9s)
+        setTimeout(() => {
+            particle.remove();
+        }, 900);
+    }
 });
 </script>
 
