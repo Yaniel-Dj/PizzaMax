@@ -271,21 +271,32 @@
     justify-content: center;
   }
   
+  /* CAMBIO: Botón WhatsApp con su onda */
   .floating-btn.wa {
     bottom: 25px;
     box-shadow: 0 6px 20px rgba(37, 211, 102, .5);
-    animation: pulse 2s infinite;
+    animation: pulse-wa 2s infinite;
   }
 
+  /* CAMBIO: Botón SMS separado más arriba y con su propia onda */
   .floating-btn.sms {
-    bottom: 100px;
+    bottom: 115px; /* Separado de 100px a 115px */
     box-shadow: 0 6px 20px rgba(33, 150, 243, .5);
+    animation: pulse-sms 2s infinite; /* Añadida la animación de splash */
   }
 
-  @keyframes pulse {
+  /* Animación para WhatsApp (Verde) */
+  @keyframes pulse-wa {
     0% { box-shadow: 0 6px 20px rgba(37, 211, 102, .5), 0 0 0 0 rgba(37, 211, 102, .7); }
     70% { box-shadow: 0 6px 20px rgba(37, 211, 102, .5), 0 0 0 18px rgba(37, 211, 102, 0); }
     100% { box-shadow: 0 6px 20px rgba(37, 211, 102, .5), 0 0 0 0 rgba(37, 211, 102, 0); }
+  }
+
+  /* Animación para SMS (Azul) */
+  @keyframes pulse-sms {
+    0% { box-shadow: 0 6px 20px rgba(33, 150, 243, .5), 0 0 0 0 rgba(33, 150, 243, .7); }
+    70% { box-shadow: 0 6px 20px rgba(33, 150, 243, .5), 0 0 0 18px rgba(33, 150, 243, 0); }
+    100% { box-shadow: 0 6px 20px rgba(33, 150, 243, .5), 0 0 0 0 rgba(33, 150, 243, 0); }
   }
 
   @media (max-width: 600px) {
@@ -294,7 +305,7 @@
     .hero p { font-size: 1.1rem; }
     .floating-btn { width: 60px; height: 60px; right: 20px; }
     .floating-btn.wa { bottom: 20px; }
-    .floating-btn.sms { bottom: 90px; }
+    .floating-btn.sms { bottom: 100px; } /* Separado en móvil también */
     .btn-icon-lg { width: 30px; height: 30px; }
     .top-banner { font-size: .85rem; padding: 8px 10px; }
   }
@@ -311,8 +322,6 @@
     justify-content: flex-start; 
     padding-top: 15vh; 
     align-items: center;
-    
-    /* CAMBIO: Fondo con más luz para combatir el oscurecido del navegador */
     background: radial-gradient(circle at center, #3d1a10 0%, #0a0503 100%);
     opacity: 0;
     visibility: hidden;
@@ -333,7 +342,6 @@
     animation: respirar 3.5s ease-in-out infinite;
   }
 
-  /* CAMBIO: Brillo del horno mucho más intenso */
   .loader::before {
     content: '';
     position: absolute;
@@ -367,7 +375,6 @@
   .steam:nth-child(2) { animation-delay: 0.8s; }
   .steam:nth-child(3) { animation-delay: 1.6s; }
 
-  /* CAMBIO: Pizza con más brillo y drop-shadow más fuerte */
   .pizza-slice {
     width: 120px;
     height: 120px;
@@ -386,7 +393,6 @@
     line-height: 1;
   }
 
-  /* CAMBIO: Letras más brillantes con más resplandor */
   .pizza-word {
     font-size: clamp(52px, 11vw, 72px);
     font-weight: 900;
@@ -417,7 +423,6 @@
     pointer-events: none;
   }
 
-  /* CAMBIO: MAX con resplandor más fuerte */
   .max-word {
     font-size: clamp(26px, 7vw, 40px);
     font-weight: 700;
@@ -438,7 +443,6 @@
     margin-top: 40px;
   }
 
-  /* CAMBIO: Puntos más grandes y brillantes */
   .dot-load {
     width: 12px;
     height: 12px;
@@ -748,7 +752,7 @@ document.addEventListener("DOMContentLoaded", () => {
             // Mostramos el logo de carga al instante
             loader.classList.add("active");
             
-            // Lo ocultamos después de 4 segundos (antes eran 3)
+            // Lo ocultamos después de 4 segundos
             setTimeout(() => {
                 loader.classList.remove("active");
             }, 4000); 
