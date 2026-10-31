@@ -1,0 +1,764 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pizza Max 🍕 | Pizza Cubana | 📞 58694855</title>
+<meta name="description" content="Pizza cubana de queso a domicilio. Pide por WhatsApp o SMS al 58694855. Abrimos todos los días desde las 4:30 PM.">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🍕</text></svg>">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', sans-serif; -webkit-tap-highlight-color: transparent; }
+  body { background: #0d0d0d; color: #e8e8e8; }
+
+  /* ICONOS SVG EN BOTONES */
+  .btn-icon {
+    width: 18px;
+    height: 18px;
+    fill: currentColor;
+    vertical-align: middle;
+    margin-right: 6px;
+    margin-top: -2px;
+  }
+  .btn-icon-lg {
+    width: 35px;
+    height: 35px;
+    fill: currentColor;
+  }
+
+  /* BANNER HORARIO */
+  .top-banner {
+    background: linear-gradient(90deg, #c62828, #ffca28);
+    color: #1a1a1a;
+    text-align: center;
+    padding: 10px 15px;
+    font-weight: bold;
+    font-size: .95rem;
+    letter-spacing: .3px;
+  }
+
+  /* NAVBAR */
+  header {
+    background: #1a1a1a;
+    color: white;
+    padding: 15px 30px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    box-shadow: 0 2px 12px rgba(0,0,0,.8);
+    border-bottom: 2px solid #c62828;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+  .brand h1 { font-size: 1.6rem; color: #ffca28; }
+  .brand .phone { font-size: .9rem; opacity: .85; margin-top: 2px; }
+  .header-actions { display: flex; gap: 8px; flex-wrap: wrap; }
+  
+  /* BOTONES GENERALES */
+  .call-btn, .hero-btn, .order-btn, .floating-btn {
+    -webkit-appearance: none;
+    appearance: none;
+    outline: none;
+    border: none;
+    cursor: pointer;
+    text-decoration: none;
+    transition: transform .2s, background-color .3s;
+    color: white !important;
+  }
+  
+  .call-btn {
+    padding: 10px 18px;
+    border-radius: 30px;
+    font-weight: bold;
+    font-size: .95rem;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  /* FORZAR COLORES SÓLIDOS EN LOS BOTONES */
+  .call-btn.wa, .hero-btn.wa, .order-btn.wa, .floating-btn.wa { background-color: #25D366 !important; }
+  .call-btn.wa:hover, .hero-btn.wa:hover, .order-btn.wa:hover, .floating-btn.wa:hover { background-color: #128C7E !important; transform: scale(1.05); }
+  
+  .call-btn.sms, .hero-btn.sms, .order-btn.sms, .floating-btn.sms { background-color: #2196F3 !important; }
+  .call-btn.sms:hover, .hero-btn.sms:hover, .order-btn.sms:hover, .floating-btn.sms:hover { background-color: #1565C0 !important; transform: scale(1.05); }
+
+  /* HERO */
+  .hero {
+    background: linear-gradient(rgba(0,0,0,.75), rgba(0,0,0,.85)),
+                url('https://images.unsplash.com/photo-1513104890138-7c749659a591?w=1600') center/cover;
+    color: white;
+    text-align: center;
+    padding: 100px 20px;
+  }
+  .hero h2 { font-size: 3rem; margin-bottom: 15px; color: #ffca28; }
+  .hero p { font-size: 1.3rem; opacity: .9; }
+  .hero .hero-flag { display: inline-block; font-size: 2.5rem; margin-bottom: 15px; }
+  .hero .hero-hours {
+    display: inline-block;
+    margin-top: 20px;
+    background: rgba(198, 40, 40, .9);
+    padding: 10px 22px;
+    border-radius: 25px;
+    font-size: 1.05rem;
+    font-weight: bold;
+    color: #fff;
+  }
+  .hero-actions {
+    display: flex;
+    justify-content: center;
+    gap: 12px;
+    flex-wrap: wrap;
+    margin-top: 25px;
+  }
+  .hero-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 14px 26px;
+    border-radius: 30px;
+    font-weight: bold;
+    font-size: 1.1rem;
+  }
+
+  /* INFO SECTION */
+  .info-section {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 60px 20px 20px;
+  }
+  .info-section h3 {
+    text-align: center;
+    color: #ffca28;
+    font-size: 2rem;
+    margin-bottom: 10px;
+  }
+  .info-section .info-subtitle {
+    text-align: center;
+    color: #999;
+    margin-bottom: 40px;
+    font-size: 1.05rem;
+  }
+  .info-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 25px;
+  }
+  .info-card {
+    background: #1a1a1a;
+    border-radius: 15px;
+    padding: 28px 24px;
+    border: 1px solid #2a2a2a;
+    text-align: center;
+    transition: transform .3s, border-color .3s;
+  }
+  .info-card:hover {
+    transform: translateY(-4px);
+    border-color: #ffca28;
+  }
+  .info-icon {
+    font-size: 2.5rem;
+    margin-bottom: 15px;
+  }
+  .info-card h4 {
+    color: #ffca28;
+    font-size: 1.25rem;
+    margin-bottom: 12px;
+  }
+  .info-card p {
+    color: #b0b0b0;
+    font-size: .95rem;
+    line-height: 1.6;
+  }
+  .info-card .highlight {
+    color: #4caf50;
+    font-weight: bold;
+  }
+
+  /* MENÚ */
+  .menu-section { padding: 40px 20px 60px; max-width: 1100px; margin: auto; }
+  .menu-section h3 {
+    text-align: center;
+    font-size: 2rem;
+    margin-bottom: 10px;
+    color: #ffca28;
+  }
+  .menu-section .subtitle {
+    text-align: center;
+    color: #999;
+    margin-bottom: 40px;
+    font-size: 1.05rem;
+  }
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 30px;
+  }
+  .pizza-card {
+    background: #1a1a1a;
+    border-radius: 15px;
+    overflow: hidden;
+    box-shadow: 0 4px 20px rgba(0,0,0,.6);
+    transition: transform .3s, box-shadow .3s;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    border: 1px solid #2a2a2a;
+  }
+  .pizza-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 30px rgba(255, 202, 40, .2);
+    border-color: #ffca28;
+  }
+  .badge {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    background: #ffca28;
+    color: #1a1a1a;
+    font-size: .75rem;
+    font-weight: bold;
+    padding: 5px 12px;
+    border-radius: 20px;
+    z-index: 2;
+  }
+  .pizza-card img { width: 100%; height: 220px; object-fit: cover; background: #2a2a2a; }
+  .pizza-info { padding: 25px; display: flex; flex-direction: column; flex: 1; }
+  .pizza-info h4 { color: #ffca28; margin-bottom: 10px; font-size: 1.5rem; }
+  .pizza-info p { color: #b0b0b0; font-size: .95rem; margin-bottom: 20px; flex: 1; }
+  .price { font-size: 2rem; font-weight: bold; color: #4caf50; margin-bottom: 15px; }
+  .order-buttons { display: flex; flex-direction: column; gap: 8px; }
+  .order-btn {
+    padding: 12px;
+    border-radius: 10px;
+    font-weight: bold;
+    font-size: 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  /* FOOTER */
+  footer {
+    background: #000;
+    color: #888;
+    text-align: center;
+    padding: 30px 20px;
+    padding-bottom: 130px;
+    border-top: 2px solid #c62828;
+  }
+  footer a { color: #ffca28; text-decoration: none; }
+  footer .footer-phone { font-size: 1.3rem; margin: 10px 0; }
+  footer .footer-phone a { color: #25D366; font-weight: bold; }
+  footer .footer-hours {
+    margin-top: 12px;
+    color: #ffca28;
+    font-weight: bold;
+  }
+
+  /* BOTONES FLOTANTES */
+  .floating-btn {
+    position: fixed;
+    right: 25px;
+    z-index: 999;
+    width: 65px;
+    height: 65px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .floating-btn.wa {
+    bottom: 25px;
+    box-shadow: 0 6px 20px rgba(37, 211, 102, .5);
+    animation: pulse 2s infinite;
+  }
+
+  .floating-btn.sms {
+    bottom: 100px;
+    box-shadow: 0 6px 20px rgba(33, 150, 243, .5);
+  }
+
+  @keyframes pulse {
+    0% { box-shadow: 0 6px 20px rgba(37, 211, 102, .5), 0 0 0 0 rgba(37, 211, 102, .7); }
+    70% { box-shadow: 0 6px 20px rgba(37, 211, 102, .5), 0 0 0 18px rgba(37, 211, 102, 0); }
+    100% { box-shadow: 0 6px 20px rgba(37, 211, 102, .5), 0 0 0 0 rgba(37, 211, 102, 0); }
+  }
+
+  @media (max-width: 600px) {
+    .hero h2 { font-size: 2rem; }
+    .hero { padding: 60px 20px; }
+    .hero p { font-size: 1.1rem; }
+    .floating-btn { width: 60px; height: 60px; right: 20px; }
+    .floating-btn.wa { bottom: 20px; }
+    .floating-btn.sms { bottom: 90px; }
+    .btn-icon-lg { width: 30px; height: 30px; }
+    .top-banner { font-size: .85rem; padding: 8px 10px; }
+  }
+
+  /* ==================================================== */
+  /* ===== CSS DEL LOGO DE CARGA "PIZZA MAX" ===== */
+  /* ==================================================== */
+  #loading-screen {
+    position: fixed;
+    inset: 0;
+    z-index: 99999;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background: radial-gradient(circle at center, #2a1008 0%, #0a0503 100%);
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.4s ease, visibility 0.4s ease;
+  }
+
+  #loading-screen.active {
+    opacity: 1;
+    visibility: visible;
+  }
+
+  .loader {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: relative;
+    animation: respirar 3.5s ease-in-out infinite;
+  }
+
+  .loader::before {
+    content: '';
+    position: absolute;
+    inset: -80px;
+    background: radial-gradient(circle, rgba(255, 120, 0, 0.18) 0%, transparent 65%);
+    border-radius: 50%;
+    z-index: -1;
+    animation: brillo-horno 2.5s ease-in-out infinite alternate;
+  }
+
+  .steam-container {
+    position: absolute;
+    top: -40px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 15px;
+    height: 40px;
+    pointer-events: none;
+  }
+
+  .steam {
+    width: 8px;
+    height: 40px;
+    background: linear-gradient(180deg, transparent 0%, rgba(255, 255, 255, 0.4) 50%, transparent 100%);
+    border-radius: 50%;
+    filter: blur(4px);
+    animation: subir-vapor 3s ease-out infinite;
+  }
+
+  .steam:nth-child(2) { animation-delay: 0.8s; }
+  .steam:nth-child(3) { animation-delay: 1.6s; }
+
+  .pizza-slice {
+    width: 110px;
+    height: 110px;
+    margin-bottom: 18px;
+    filter: drop-shadow(0 8px 15px rgba(0, 0, 0, 0.6)) drop-shadow(0 0 20px rgba(255, 140, 0, 0.5));
+    animation: balanceo 2.5s ease-in-out infinite alternate;
+  }
+
+  .brand-load {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    line-height: 1;
+  }
+
+  .pizza-word {
+    font-size: clamp(48px, 10vw, 68px);
+    font-weight: 900;
+    letter-spacing: 8px;
+    background: linear-gradient(180deg, #ff5252 0%, #ff8c00 45%, #ffca28 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    position: relative;
+    filter: drop-shadow(0 3px 6px rgba(0, 0, 0, 0.6)) drop-shadow(0 0 25px rgba(255, 140, 0, 0.4));
+    animation: brillo-pizza 2.5s ease-in-out infinite alternate;
+  }
+
+  .pizza-word::after {
+    content: 'PIZZA';
+    position: absolute;
+    top: 0;
+    left: 0;
+    background: linear-gradient(90deg, transparent 30%, rgba(255, 255, 255, 0.9) 50%, transparent 70%);
+    background-size: 200% 100%;
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    animation: recorrer-brillo 3s ease-in-out infinite;
+    pointer-events: none;
+  }
+
+  .max-word {
+    font-size: clamp(24px, 6vw, 36px);
+    font-weight: 700;
+    letter-spacing: 18px;
+    margin-top: 8px;
+    padding-left: 18px;
+    color: #fffde7;
+    text-shadow: 0 0 15px rgba(255, 200, 100, 0.7), 0 0 30px rgba(255, 140, 0, 0.4);
+    animation: brillo-max 2.5s ease-in-out infinite alternate;
+  }
+
+  .dots-load {
+    display: flex;
+    gap: 10px;
+    margin-top: 40px;
+  }
+
+  .dot-load {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: linear-gradient(180deg, #ffca28, #ff5252);
+    box-shadow: 0 0 12px rgba(255, 140, 0, 0.7);
+    animation: rebotar-punto 1.4s infinite ease-in-out both;
+  }
+
+  .dot-load:nth-child(1) { animation-delay: -0.32s; }
+  .dot-load:nth-child(2) { animation-delay: -0.16s; }
+  .dot-load:nth-child(3) { animation-delay: 0s; }
+
+  @keyframes respirar {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.02); }
+  }
+
+  @keyframes balanceo {
+    0% { transform: rotate(-6deg) translateY(0); }
+    100% { transform: rotate(6deg) translateY(-8px); }
+  }
+
+  @keyframes brillo-pizza {
+    0% { filter: drop-shadow(0 3px 6px rgba(0, 0, 0, 0.6)) drop-shadow(0 0 15px rgba(255, 140, 0, 0.3)); }
+    100% { filter: drop-shadow(0 3px 6px rgba(0, 0, 0, 0.6)) drop-shadow(0 0 30px rgba(255, 140, 0, 0.8)); }
+  }
+
+  @keyframes brillo-max {
+    0% { text-shadow: 0 0 8px rgba(255, 200, 100, 0.4), 0 0 15px rgba(255, 140, 0, 0.2); }
+    100% { text-shadow: 0 0 20px rgba(255, 200, 100, 1), 0 0 40px rgba(255, 140, 0, 0.6); }
+  }
+
+  @keyframes recorrer-brillo {
+    0% { background-position: 200% center; }
+    100% { background-position: -200% center; }
+  }
+
+  @keyframes subir-vapor {
+    0% { transform: translateY(20px) scale(0.6); opacity: 0; }
+    30% { opacity: 1; }
+    100% { transform: translateY(-30px) scale(1.4); opacity: 0; }
+  }
+
+  @keyframes brillo-horno {
+    0% { opacity: 0.4; transform: scale(0.95); }
+    100% { opacity: 0.9; transform: scale(1.05); }
+  }
+
+  @keyframes rebotar-punto {
+    0%, 80%, 100% { transform: scale(0.5); opacity: 0.3; }
+    40% { transform: scale(1.2); opacity: 1; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ===== LOGO DE CARGA ===== -->
+<div id="loading-screen" role="status" aria-label="Cargando">
+    <div class="loader">
+        <div class="steam-container">
+            <div class="steam"></div>
+            <div class="steam"></div>
+            <div class="steam"></div>
+        </div>
+        <svg class="pizza-slice" viewBox="0 0 100 100">
+            <defs>
+                <linearGradient id="sliceGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+                    <stop offset="0%" stop-color="#fff176" />
+                    <stop offset="40%" stop-color="#ffca28" />
+                    <stop offset="100%" stop-color="#f57f17" />
+                </linearGradient>
+                <linearGradient id="crustGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+                    <stop offset="0%" stop-color="#f5a623" />
+                    <stop offset="100%" stop-color="#8b4513" />
+                </linearGradient>
+            </defs>
+            <path d="M 12 22 Q 50 0 88 22 L 82 32 Q 50 14 18 32 Z" fill="url(#crustGrad)" />
+            <path d="M 18 32 L 50 92 L 82 32 Q 50 14 18 32 Z" fill="url(#sliceGrad)" />
+            <circle cx="38" cy="48" r="7" fill="#b30000" />
+            <circle cx="62" cy="46" r="6" fill="#b30000" />
+            <circle cx="50" cy="65" r="6.5" fill="#b30000" />
+            <circle cx="36" cy="46" r="2" fill="rgba(255,255,255,0.4)" />
+            <circle cx="60" cy="44" r="1.5" fill="rgba(255,255,255,0.4)" />
+            <circle cx="48" cy="63" r="1.8" fill="rgba(255,255,255,0.4)" />
+            <path d="M 46 88 Q 48 95 50 92 Q 52 95 54 88" fill="#ffca28" />
+        </svg>
+        <div class="brand-load">
+            <div class="pizza-word">PIZZA</div>
+            <div class="max-word">MAX</div>
+        </div>
+        <div class="dots-load">
+            <div class="dot-load"></div>
+            <div class="dot-load"></div>
+            <div class="dot-load"></div>
+        </div>
+    </div>
+</div>
+
+<div class="top-banner">
+  ⏰ Abrimos todos los días a partir de las 4:30 PM · 📞 58694855
+</div>
+
+<header>
+  <div class="brand">
+    <h1>🍕 Pizza Max</h1>
+    <p class="phone">🇨🇺 Pizza Cubana · 📞 58694855</p>
+  </div>
+  <div class="header-actions">
+    <a class="call-btn wa"
+       href="https://api.whatsapp.com/send?phone=5358694855&text=Hola%21%20Quiero%20hacer%20un%20pedido"
+       target="_blank" rel="noopener">
+      <svg class="btn-icon" viewBox="0 0 448 512" xmlns="http://www.w3.org/2000/svg"><path d="M380.9 97.1C339 55.1 283.2 32 223.9 32c-122.4 0-222 99.6-222 222 0 39.1 10.2 77.3 29.6 111L0 480l117.7-30.9c32.4 17.7 68.9 27 106.1 27h.1c122.3 0 224.1-99.6 224.1-222 0-59.3-25.2-115-67.1-157zm-157 341.6c-33.2 0-65.7-8.9-94-25.7l-6.7-4-69.8 18.3L72 359.2l-4.4-7c-18.5-29.4-28.2-63.3-28.2-98.2 0-101.7 82.8-184.5 184.6-184.5 49.3 0 95.6 19.2 130.4 54.1 34.8 34.9 56.2 81.2 56.1 130.5 0 101.8-84.9 184.6-186.6 184.6zm101.2-138.2c-5.5-2.8-32.8-16.2-37.9-18-5.1-1.9-8.8-2.8-12.5 2.8-3.7 5.6-14.3 18-17.6 21.8-3.2 3.7-6.5 4.2-12 1.4-32.6-16.3-54-29.1-75.5-66-5.7-9.8 5.7-9.1 16.3-30.3 1.8-3.7.9-6.9-.5-9.7-1.4-2.8-12.5-30.1-17.1-41.2-4.5-10.8-9.1-9.3-12.5-9.5-3.2-.2-6.9-.2-10.6-.2-3.7 0-9.7 1.4-14.8 6.9-5.1 5.6-19.4 19-19.4 46.3 0 27.3 19.9 53.7 22.6 57.4 2.8 3.7 39.1 59.7 94.8 83.8 35.2 15.2 49 16.5 66.6 13.9 10.7-1.6 32.8-13.4 37.4-26.4 4.6-13 4.6-24.1 3.2-26.4-1.3-2.5-5-3.9-10.5-6.6z"/></svg>
+      WhatsApp
+    </a>
+    <a class="call-btn sms"
+       href="sms:58694855?body=Hola%21%20Quiero%20hacer%20un%20pedido%20en%20Pizza%20Max">
+      <svg class="btn-icon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M20 2H4c-1.1 0-1.99.9-1.99 2L2 22l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm-2 12H6v-2h12v2zm0-3H6V9h12v2zm0-3H6V6h12v2z"/></svg>
+      SMS
+    </a>
+  </div>
+</header>
+
+<section class="hero">
+  <div class="hero-flag">🇨🇺</div>
+  <h2>La auténtica pizza cubana</h2>
+  <p>Hecha en casa · Masa artesanal · Puro queso derretido</p>
+  <div class="hero-hours">⏰ Todos los días desde las 4:30 PM</div>
+  <div class="hero-actions">
+    <a class="hero-btn wa"
+       href="https://api.whatsapp.com/send?phone=5358694855&text=Hola%21%20Quiero%20hacer%20un%20pedido"
+       target="_blank" rel="noopener">
+      <svg class="btn-icon" viewBox="0 0 448 512" xmlns="http://www.w3.org/2000/svg"><path d="M380.9 97.1C339 55.1 283.2 32 223.9 32c-122.4 0-222 99.6-222 222 0 39.1 10.2 77.3 29.6 111L0 480l117.7-30.9c32.4 17.7 68.9 27 106.1 27h.1c122.3 0 224.1-99.6 224.1-222 0-59.3-25.2-115-67.1-157zm-157 341.6c-33.2 0-65.7-8.9-94-25.7l-6.7-4-69.8 18.3L72 359.2l-4.4-7c-18.5-29.4-28.2-63.3-28.2-98.2 0-101.7 82.8-184.5 184.6-184.5 49.3 0 95.6 19.2 130.4 54.1 34.8 34.9 56.2 81.2 56.1 130.5 0 101.8-84.9 184.6-186.6 184.6zm101.2-138.2c-5.5-2.8-32.8-16.2-37.9-18-5.1-1.9-8.8-2.8-12.5 2.8-3.7 5.6-14.3 18-17.6 21.8-3.2 3.7-6.5 4.2-12 1.4-32.6-16.3-54-29.1-75.5-66-5.7-9.8 5.7-9.1 16.3-30.3 1.8-3.7.9-6.9-.5-9.7-1.4-2.8-12.5-30.1-17.1-41.2-4.5-10.8-9.1-9.3-12.5-9.5-3.2-.2-6.9-.2-10.6-.2-3.7 0-9.7 1.4-14.8 6.9-5.1 5.6-19.4 19-19.4 46.3 0 27.3 19.9 53.7 22.6 57.4 2.8 3.7 39.1 59.7 94.8 83.8 35.2 15.2 49 16.5 66.6 13.9 10.7-1.6 32.8-13.4 37.4-26.4 4.6-13 4.6-24.1 3.2-26.4-1.3-2.5-5-3.9-10.5-6.6z"/></svg>
+      Pedir por WhatsApp
+    </a>
+    <a class="hero-btn sms"
+       href="sms:58694855?body=Hola%21%20Quiero%20hacer%20un%20pedido%20en%20Pizza%20Max">
+      <svg class="btn-icon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M20 2H4c-1.1 0-1.99.9-1.99 2L2 22l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm-2 12H6v-2h12v2zm0-3H6V9h12v2zm0-3H6V6h12v2z"/></svg>
+      Pedir por SMS
+    </a>
+  </div>
+</section>
+
+<section class="info-section">
+  <h3>Información importante</h3>
+  <p class="info-subtitle">Todo lo que necesitas saber antes de pedir</p>
+  <div class="info-grid">
+
+    <div class="info-card">
+      <div class="info-icon">⏰</div>
+      <h4>Horario de atención</h4>
+      <p>Todos los días<br><span class="highlight">desde las 4:30 PM</span></p>
+    </div>
+
+    <div class="info-card">
+      <div class="info-icon">💵</div>
+      <h4>Formas de pago</h4>
+      <p>
+        💵 <strong style="color:#4caf50">Efectivo</strong><br>
+        🏦 <strong style="color:#2196F3">Transferencia</strong>
+      </p>
+    </div>
+
+    <div class="info-card">
+      <div class="info-icon">🏦</div>
+      <h4>Pago por transferencia</h4>
+      <p>
+        Pagando por transferencia se aplica un <span class="highlight">+35%</span> sobre el precio.<br><br>
+        💵 <strong style="color:#4caf50">Efectivo:</strong> precio normal<br>
+        🏦 <strong style="color:#2196F3">Transferencia:</strong> precio +35%
+      </p>
+    </div>
+
+    <div class="info-card" style="grid-column: 1 / -1; max-width: 520px; margin: 0 auto; text-align:center;">
+      <div class="info-icon">📸</div>
+      <h4>Datos para transferencia</h4>
+      <p style="margin-bottom:18px;">
+        Realiza tu transferencia (+35%) a los siguientes datos:
+      </p>
+      <img src="img/IMG_20250729_163854.jpeg"
+           onerror="this.style.display='none'"
+           alt="Datos de transferencia Pizza Max"
+           style="max-width:100%; border-radius:12px; border:2px solid #ffca28; display:block; margin:0 auto;">
+      <p style="margin-top:18px; font-size:.9rem; color:#999;">
+        📸 Envía el comprobante por WhatsApp o SMS al
+        <strong style="color:#4caf50">58694855</strong>
+      </p>
+    </div>
+
+  </div>
+</section>
+
+<section class="menu-section">
+  <h3>Nuestro Menú 🇨🇺</h3>
+  <p class="subtitle">Pizzas cubanas de queso hechas con amor por Pizza Max</p>
+  <div class="grid">
+
+    <!-- Napolitana -->
+    <div class="pizza-card">
+      <span class="badge">🍕 Clásica</span>
+      <img src="img/cc820af8-42c6-469c-a675-bbd785a046fd.jpeg"
+           alt="Pizza Napolitana de queso" loading="lazy">
+      <div class="pizza-info">
+        <h4>Napolitana</h4>
+        <p>Masa artesanal cubierta con queso mozzarella derretido. Sencilla y deliciosa, solo queso.</p>
+        <div class="price">$200</div>
+        <div class="order-buttons">
+          <a class="order-btn wa"
+             href="https://api.whatsapp.com/send?phone=5358694855&text=Hola%21%20Quiero%20pedir%20una%20pizza%20Napolitana%20de%20%24200"
+             target="_blank" rel="noopener">
+            <svg class="btn-icon" viewBox="0 0 448 512" xmlns="http://www.w3.org/2000/svg"><path d="M380.9 97.1C339 55.1 283.2 32 223.9 32c-122.4 0-222 99.6-222 222 0 39.1 10.2 77.3 29.6 111L0 480l117.7-30.9c32.4 17.7 68.9 27 106.1 27h.1c122.3 0 224.1-99.6 224.1-222 0-59.3-25.2-115-67.1-157zm-157 341.6c-33.2 0-65.7-8.9-94-25.7l-6.7-4-69.8 18.3L72 359.2l-4.4-7c-18.5-29.4-28.2-63.3-28.2-98.2 0-101.7 82.8-184.5 184.6-184.5 49.3 0 95.6 19.2 130.4 54.1 34.8 34.9 56.2 81.2 56.1 130.5 0 101.8-84.9 184.6-186.6 184.6zm101.2-138.2c-5.5-2.8-32.8-16.2-37.9-18-5.1-1.9-8.8-2.8-12.5 2.8-3.7 5.6-14.3 18-17.6 21.8-3.2 3.7-6.5 4.2-12 1.4-32.6-16.3-54-29.1-75.5-66-5.7-9.8 5.7-9.1 16.3-30.3 1.8-3.7.9-6.9-.5-9.7-1.4-2.8-12.5-30.1-17.1-41.2-4.5-10.8-9.1-9.3-12.5-9.5-3.2-.2-6.9-.2-10.6-.2-3.7 0-9.7 1.4-14.8 6.9-5.1 5.6-19.4 19-19.4 46.3 0 27.3 19.9 53.7 22.6 57.4 2.8 3.7 39.1 59.7 94.8 83.8 35.2 15.2 49 16.5 66.6 13.9 10.7-1.6 32.8-13.4 37.4-26.4 4.6-13 4.6-24.1 3.2-26.4-1.3-2.5-5-3.9-10.5-6.6z"/></svg>
+            Pedir por WhatsApp
+          </a>
+          <a class="order-btn sms"
+             href="sms:58694855?body=Hola%21%20Quiero%20pedir%20una%20pizza%20Napolitana%20de%20%24200">
+            <svg class="btn-icon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M20 2H4c-1.1 0-1.99.9-1.99 2L2 22l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm-2 12H6v-2h12v2zm0-3H6V9h12v2zm0-3H6V6h12v2z"/></svg>
+            Pedir por SMS
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Familiar -->
+    <div class="pizza-card">
+      <span class="badge">👨‍👩‍👧 Familiar</span>
+      <img src="img/11305db3-d30b-46b6-b821-5b3d90864ddd.jpeg"
+           alt="Pizza Familiar de queso" loading="lazy">
+      <div class="pizza-info">
+        <h4>Familiar</h4>
+        <p>Pizza grande para compartir en familia, masa artesanal con queso mozzarella. Solo queso.</p>
+        <div class="price">$2.500</div>
+        <div class="order-buttons">
+          <a class="order-btn wa"
+             href="https://api.whatsapp.com/send?phone=5358694855&text=Hola%21%20Quiero%20pedir%20una%20pizza%20Familiar%20de%20%242500"
+             target="_blank" rel="noopener">
+            <svg class="btn-icon" viewBox="0 0 448 512" xmlns="http://www.w3.org/2000/svg"><path d="M380.9 97.1C339 55.1 283.2 32 223.9 32c-122.4 0-222 99.6-222 222 0 39.1 10.2 77.3 29.6 111L0 480l117.7-30.9c32.4 17.7 68.9 27 106.1 27h.1c122.3 0 224.1-99.6 224.1-222 0-59.3-25.2-115-67.1-157zm-157 341.6c-33.2 0-65.7-8.9-94-25.7l-6.7-4-69.8 18.3L72 359.2l-4.4-7c-18.5-29.4-28.2-63.3-28.2-98.2 0-101.7 82.8-184.5 184.6-184.5 49.3 0 95.6 19.2 130.4 54.1 34.8 34.9 56.2 81.2 56.1 130.5 0 101.8-84.9 184.6-186.6 184.6zm101.2-138.2c-5.5-2.8-32.8-16.2-37.9-18-5.1-1.9-8.8-2.8-12.5 2.8-3.7 5.6-14.3 18-17.6 21.8-3.2 3.7-6.5 4.2-12 1.4-32.6-16.3-54-29.1-75.5-66-5.7-9.8 5.7-9.1 16.3-30.3 1.8-3.7.9-6.9-.5-9.7-1.4-2.8-12.5-30.1-17.1-41.2-4.5-10.8-9.1-9.3-12.5-9.5-3.2-.2-6.9-.2-10.6-.2-3.7 0-9.7 1.4-14.8 6.9-5.1 5.6-19.4 19-19.4 46.3 0 27.3 19.9 53.7 22.6 57.4 2.8 3.7 39.1 59.7 94.8 83.8 35.2 15.2 49 16.5 66.6 13.9 10.7-1.6 32.8-13.4 37.4-26.4 4.6-13 4.6-24.1 3.2-26.4-1.3-2.5-5-3.9-10.5-6.6z"/></svg>
+            Pedir por WhatsApp
+          </a>
+          <a class="order-btn sms"
+             href="sms:58694855?body=Hola%21%20Quiero%20pedir%20una%20pizza%20Familiar%20de%20%242500">
+            <svg class="btn-icon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M20 2H4c-1.1 0-1.99.9-1.99 2L2 22l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm-2 12H6v-2h12v2zm0-3H6V9h12v2zm0-3H6V6h12v2z"/></svg>
+            Pedir por SMS
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Familiar Doble Queso -->
+    <div class="pizza-card">
+      <span class="badge">⭐ Especial</span>
+      <img src="https://images.unsplash.com/photo-1541745537411-b8046dc6d66c?w=600"
+           alt="Pizza Familiar Doble Queso" loading="lazy">
+      <div class="pizza-info">
+        <h4>Familiar Doble Queso</h4>
+        <p>Nuestra familiar cubana con el doble de queso mozzarella derretido. Para los amantes del queso.</p>
+        <div class="price">$3.000</div>
+        <div class="order-buttons">
+          <a class="order-btn wa"
+             href="https://api.whatsapp.com/send?phone=5358694855&text=Hola%21%20Quiero%20pedir%20una%20pizza%20Familiar%20Doble%20Queso%20de%20%243000"
+             target="_blank" rel="noopener">
+            <svg class="btn-icon" viewBox="0 0 448 512" xmlns="http://www.w3.org/2000/svg"><path d="M380.9 97.1C339 55.1 283.2 32 223.9 32c-122.4 0-222 99.6-222 222 0 39.1 10.2 77.3 29.6 111L0 480l117.7-30.9c32.4 17.7 68.9 27 106.1 27h.1c122.3 0 224.1-99.6 224.1-222 0-59.3-25.2-115-67.1-157zm-157 341.6c-33.2 0-65.7-8.9-94-25.7l-6.7-4-69.8 18.3L72 359.2l-4.4-7c-18.5-29.4-28.2-63.3-28.2-98.2 0-101.7 82.8-184.5 184.6-184.5 49.3 0 95.6 19.2 130.4 54.1 34.8 34.9 56.2 81.2 56.1 130.5 0 101.8-84.9 184.6-186.6 184.6zm101.2-138.2c-5.5-2.8-32.8-16.2-37.9-18-5.1-1.9-8.8-2.8-12.5 2.8-3.7 5.6-14.3 18-17.6 21.8-3.2 3.7-6.5 4.2-12 1.4-32.6-16.3-54-29.1-75.5-66-5.7-9.8 5.7-9.1 16.3-30.3 1.8-3.7.9-6.9-.5-9.7-1.4-2.8-12.5-30.1-17.1-41.2-4.5-10.8-9.1-9.3-12.5-9.5-3.2-.2-6.9-.2-10.6-.2-3.7 0-9.7 1.4-14.8 6.9-5.1 5.6-19.4 19-19.4 46.3 0 27.3 19.9 53.7 22.6 57.4 2.8 3.7 39.1 59.7 94.8 83.8 35.2 15.2 49 16.5 66.6 13.9 10.7-1.6 32.8-13.4 37.4-26.4 4.6-13 4.6-24.1 3.2-26.4-1.3-2.5-5-3.9-10.5-6.6z"/></svg>
+            Pedir por WhatsApp
+          </a>
+          <a class="order-btn sms"
+             href="sms:58694855?body=Hola%21%20Quiero%20pedir%20una%20pizza%20Familiar%20Doble%20Queso%20de%20%243000">
+            <svg class="btn-icon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M20 2H4c-1.1 0-1.99.9-1.99 2L2 22l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm-2 12H6v-2h12v2zm0-3H6V9h12v2zm0-3H6V6h12v2z"/></svg>
+            Pedir por SMS
+          </a>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<footer>
+  <p>🍕 Pizza Max · Pizza Cubana 🇨🇺 · Hecho con ❤️</p>
+  <p class="footer-phone">📞 <a href="tel:58694855">58694855</a></p>
+  <p class="footer-hours">⏰ Todos los días desde las 4:30 PM</p>
+  <p style="margin-top:12px;font-size:.9rem;">💵 Efectivo (precio normal) · 🏦 Transferencia (+35%)</p>
+  <p style="margin-top:10px;font-size:.9rem;">Síguenos en <a href="#">Instagram</a> · <a href="#">Facebook</a></p>
+</footer>
+
+<!-- BOTÓN FLOTANTE SMS -->
+<a class="floating-btn sms"
+   href="sms:58694855?body=Hola%21%20Quiero%20hacer%20un%20pedido%20en%20Pizza%20Max"
+   title="Pedir por SMS">
+  <svg class="btn-icon-lg" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M20 2H4c-1.1 0-1.99.9-1.99 2L2 22l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm-2 12H6v-2h12v2zm0-3H6V9h12v2zm0-3H6V6h12v2z"/></svg>
+</a>
+
+<!-- BOTÓN FLOTANTE WHATSAPP -->
+<a class="floating-btn wa"
+   href="https://api.whatsapp.com/send?phone=5358694855&text=Hola%21%20Quiero%20hacer%20un%20pedido"
+   target="_blank"
+   rel="noopener"
+   title="Pedir por WhatsApp">
+  <svg class="btn-icon-lg" viewBox="0 0 448 512" xmlns="http://www.w3.org/2000/svg"><path d="M380.9 97.1C339 55.1 283.2 32 223.9 32c-122.4 0-222 99.6-222 222 0 39.1 10.2 77.3 29.6 111L0 480l117.7-30.9c32.4 17.7 68.9 27 106.1 27h.1c122.3 0 224.1-99.6 224.1-222 0-59.3-25.2-115-67.1-157zm-157 341.6c-33.2 0-65.7-8.9-94-25.7l-6.7-4-69.8 18.3L72 359.2l-4.4-7c-18.5-29.4-28.2-63.3-28.2-98.2 0-101.7 82.8-184.5 184.6-184.5 49.3 0 95.6 19.2 130.4 54.1 34.8 34.9 56.2 81.2 56.1 130.5 0 101.8-84.9 184.6-186.6 184.6zm101.2-138.2c-5.5-2.8-32.8-16.2-37.9-18-5.1-1.9-8.8-2.8-12.5 2.8-3.7 5.6-14.3 18-17.6 21.8-3.2 3.7-6.5 4.2-12 1.4-32.6-16.3-54-29.1-75.5-66-5.7-9.8 5.7-9.1 16.3-30.3 1.8-3.7.9-6.9-.5-9.7-1.4-2.8-12.5-30.1-17.1-41.2-4.5-10.8-9.1-9.3-12.5-9.5-3.2-.2-6.9-.2-10.6-.2-3.7 0-9.7 1.4-14.8 6.9-5.1 5.6-19.4 19-19.4 46.3 0 27.3 19.9 53.7 22.6 57.4 2.8 3.7 39.1 59.7 94.8 83.8 35.2 15.2 49 16.5 66.6 13.9 10.7-1.6 32.8-13.4 37.4-26.4 4.6-13 4.6-24.1 3.2-26.4-1.3-2.5-5-3.9-10.5-6.6z"/></svg>
+</a>
+
+<!-- ==================================================== -->
+<!-- ===== JAVASCRIPT (CORREGIDO PARA QUE ABRA LA APP) ===== -->
+<!-- ==================================================== -->
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+    const loader = document.getElementById("loading-screen");
+    
+    // Seleccionamos TODOS los enlaces que vayan a WhatsApp o SMS
+    const actionLinks = document.querySelectorAll('a[href^="https://api.whatsapp.com"], a[href^="sms:"]');
+    
+    actionLinks.forEach(link => {
+        link.addEventListener("click", function(e) {
+            // NO usamos e.preventDefault() para que el navegador abra WhatsApp o SMS al instante
+            
+            // Mostramos el logo de carga en segundo plano
+            loader.classList.add("active");
+            
+            // Lo ocultamos después de 3 segundos 
+            // (Si el usuario regresa, el logo ya no estará pegado)
+            setTimeout(() => {
+                loader.classList.remove("active");
+            }, 3000); 
+        });
+    });
+
+    // Limpiar el logo si el usuario regresa a la página desde la app
+    window.addEventListener("pageshow", function(event) {
+        if (event.persisted || document.visibilityState === "visible") {
+            loader.classList.remove("active");
+        }
+    });
+    
+    document.addEventListener("visibilitychange", () => {
+        if (document.visibilityState === "visible") {
+            loader.classList.remove("active");
+        }
+    });
+});
+</script>
+
+</body>
+</html>
