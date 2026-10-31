@@ -1,0 +1,462 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pizzería Bella Napoli 🍕 | 📞 58694855</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', sans-serif; }
+  body { background: #fff8f0; color: #2b2b2b; }
+
+  /* NAVBAR */
+  header {
+    background: #c62828;
+    color: white;
+    padding: 15px 30px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    box-shadow: 0 2px 8px rgba(0,0,0,.2);
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+  .brand h1 { font-size: 1.6rem; }
+  .brand .phone { font-size: .9rem; opacity: .95; margin-top: 2px; }
+  .cart-btn {
+    background: #ffca28;
+    color: #2b2b2b;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 30px;
+    font-weight: bold;
+    cursor: pointer;
+    font-size: 1rem;
+    transition: transform .2s;
+  }
+  .cart-btn:hover { transform: scale(1.05); }
+
+  /* HERO */
+  .hero {
+    background: linear-gradient(rgba(0,0,0,.5), rgba(0,0,0,.5)),
+                url('https://images.unsplash.com/photo-1513104890138-7c749659a591?w=1600') center/cover;
+    color: white;
+    text-align: center;
+    padding: 100px 20px;
+  }
+  .hero h2 { font-size: 3rem; margin-bottom: 15px; }
+  .hero p { font-size: 1.3rem; opacity: .95; }
+  .hero .hero-phone {
+    display: inline-block;
+    margin-top: 20px;
+    background: #25D366;
+    color: white;
+    padding: 12px 25px;
+    border-radius: 30px;
+    font-weight: bold;
+    text-decoration: none;
+    font-size: 1.1rem;
+    transition: background .3s;
+  }
+  .hero .hero-phone:hover { background: #128C7E; }
+
+  /* MENÚ */
+  .menu-section { padding: 60px 20px; max-width: 1200px; margin: auto; }
+  .menu-section h3 {
+    text-align: center;
+    font-size: 2rem;
+    margin-bottom: 40px;
+    color: #c62828;
+  }
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 25px;
+  }
+  .pizza-card {
+    background: white;
+    border-radius: 15px;
+    overflow: hidden;
+    box-shadow: 0 4px 15px rgba(0,0,0,.1);
+    transition: transform .3s, box-shadow .3s;
+    position: relative;
+  }
+  .pizza-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 25px rgba(0,0,0,.2);
+  }
+  .badge {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    background: #ffca28;
+    color: #2b2b2b;
+    font-size: .75rem;
+    font-weight: bold;
+    padding: 5px 10px;
+    border-radius: 20px;
+    z-index: 2;
+  }
+  .pizza-card img {
+    width: 100%;
+    height: 180px;
+    object-fit: cover;
+  }
+  .pizza-info { padding: 20px; }
+  .pizza-info h4 { color: #c62828; margin-bottom: 8px; font-size: 1.3rem; }
+  .pizza-info p { color: #666; font-size: .95rem; margin-bottom: 15px; min-height: 45px; }
+  .price-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .price { font-size: 1.5rem; font-weight: bold; color: #2e7d32; }
+  .add-btn {
+    background: #c62828;
+    color: white;
+    border: none;
+    padding: 10px 18px;
+    border-radius: 25px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: background .3s;
+  }
+  .add-btn:hover { background: #8e0000; }
+
+  /* CARRITO */
+  .cart-panel {
+    position: fixed;
+    top: 0;
+    right: -400px;
+    width: 380px;
+    max-width: 100%;
+    height: 100vh;
+    background: white;
+    box-shadow: -4px 0 20px rgba(0,0,0,.2);
+    transition: right .35s ease;
+    z-index: 200;
+    display: flex;
+    flex-direction: column;
+  }
+  .cart-panel.open { right: 0; }
+  .cart-header {
+    background: #c62828;
+    color: white;
+    padding: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .cart-header button {
+    background: none;
+    border: none;
+    color: white;
+    font-size: 1.8rem;
+    cursor: pointer;
+  }
+  .cart-items { flex: 1; overflow-y: auto; padding: 15px; }
+  .cart-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px 0;
+    border-bottom: 1px solid #eee;
+  }
+  .cart-item-info { flex: 1; }
+  .cart-item-info strong { color: #c62828; }
+  .cart-item-info small { color: #888; display: block; }
+  .qty-controls { display: flex; align-items: center; gap: 8px; }
+  .qty-controls button {
+    width: 28px; height: 28px;
+    border-radius: 50%;
+    border: 1px solid #c62828;
+    background: white;
+    color: #c62828;
+    cursor: pointer;
+    font-weight: bold;
+  }
+  .qty-controls button:hover { background: #c62828; color: white; }
+  .cart-footer {
+    padding: 20px;
+    border-top: 2px solid #eee;
+     background: #fff8f0;
+  . }
+  .total { font-size: 1.4rem;check font-weight: bold; colorout: #2e7d32; margin-bottom:-btn 15px; }
+  .check:hoverout-btn {
+    width: 100%;
+    background: #25D366;
+    color: white;
+    border: none;
+    padding: 15px;
+    border-radius: 10px;
+    font-size: 1.1rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background .3s;
+  }
+ { background: #128C7E; }
+  .empty-cart { text-align: center; color: #aaa; padding: 40px 20px; }
+
+  /* OVERLAY */
+  .overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,.5);
+    z-index: 150;
+  }
+  .overlay.show { display: block; }
+
+  /* FOOTER */
+  footer {
+    background: #2b2b2b;
+    color: #ccc;
+    text-align: center;
+    padding: 25px;
+    margin-top: 40px;
+  }
+  footer a { color: #ffca28; text-decoration: none; }
+  footer .footer-phone { font-size: 1.1rem; margin: 8px 0; }
+  footer .footer-phone a { color: #25D366; font-weight: bold; }
+
+  /* TOAST */
+  .toast {
+    position: fixed;
+    bottom: 30px;
+    left: 50%;
+    transform: translateX(-50%) translateY(100px);
+    background: #2e7d32;
+    color: white;
+    padding: 12px 25px;
+    border-radius: 30px;
+    box-shadow: 0 4px 12px rgba(0,0,0,.3);
+    transition: transform .3s;
+    z-index: 300;
+  }
+  .toast.show { transform: translateX(-50%) translateY(0); }
+
+  @media (max-width: 600px) {
+    .hero h2 { font-size: 2rem; }
+    .hero { padding: 60px 20px; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="brand">
+    <h1>🍕 Bella Napoli</h1>
+    <p class="phone">📞 58694855</p>
+  </div>
+  <button class="cart-btn" onclick="toggleCart()">
+    🛒 Carrito (<span id="cartCount">0</span>)
+  </button>
+</header>
+
+<section class="hero">
+  <h2>La auténtica pizza italiana</h2>
+  <p>Horneada a la leña · Masa artesanal · Ingredientes frescos</p>
+  <a class="hero-phone" href="tel:58694855">📞 Pide ya: 58694855</a>
+</section>
+
+<section class="menu-section">
+  <h3>Nuestro Menú</h3>
+  <div class="grid" id="pizzaGrid"></div>
+</section>
+
+<div class="overlay" id="overlay" onclick="toggleCart()"></div>
+
+<aside class="cart-panel" id="cartPanel">
+  <div class="cart-header">
+    <h3>Tu Carrito</h3>
+    <button onclick="toggleCart()">×</button>
+  </div>
+  <div class="cart-items" id="cartItems">
+    <p class="empty-cart">Tu carrito está vacío 🍕</p>
+  </div>
+  <div class="cart-footer">
+    <div class="total">Total: $<span id="cartTotal">0</span></div>
+    <button class="checkout-btn" onclick="checkout()">📱 Pedir por WhatsApp</button>
+  </div>
+</aside>
+
+<div class="toast" id="toast">¡Añadido al carrito!</div>
+
+<footer>
+  <p>🍕 Pizzería Bella Napoli · Hecho con ❤️</p>
+  <p class="footer-phone">📞 <a href="tel:58694855">58694855</a></p>
+  <p style="margin-top:8px;font-size:.9rem;">Síguenos en <a href="#">Instagram</a> · <a href="#">Facebook</a></p>
+</footer>
+
+<script>
+// ✏️ CONFIGURACIÓN — Número de WhatsApp (+53 Cuba)
+const WHATSAPP_NUMBER = "5358694855";
+
+const pizzas = [
+  {
+    id: 1,
+    name: "Margherita",
+    desc: "Salsa de tomate, mozzarella fresca y albahaca",
+    price: 149,
+    img: "https://images.unsplash.com/photo-1574071318508-1cdbab80d002?w=600"
+  },
+  {
+    id: 2,
+    name: "Pepperoni",
+    desc: "Doble pepperoni y queso mozzarella derretido",
+    price: 179,
+    img: "https://images.unsplash.com/photo-1628840042765-356cda07504e?w=600"
+  },
+  {
+    id: 3,
+    name: "Cuatro Quesos",
+    desc: "Mozzarella, gorgonzola, parmesano y provolone",
+    price: 189,
+    img: "https://images.unsplash.com/photo-1513104890138-7c749659a591?w=600"
+  },
+  {
+    id: 4,
+    name: "Hawaiana",
+    desc: "Jamón, piña y mozzarella (¡la favorita polémica!)",
+    price: 169,
+    img: "https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?w=600"
+  },
+  {
+    id: 5,
+    name: "Vegetariana",
+    desc: "Pimientos, champiñones, cebolla y aceitunas",
+    price: 159,
+    img: "https://images.unsplash.com/photo-1571407970349-bc81e7e96d47?w=600"
+  },
+  {
+    id: 6,
+    name: "BBQ Pollo",
+    desc: "Pollo a la parrilla, cebolla morada y salsa BBQ",
+    price: 199,
+    img: "https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?w=600"
+  },
+  {
+    id: 7,
+    name: "Napolitana",
+    desc: "Salsa de tomate, mozzarella, anchoas y alcaparras",
+    price: 200,
+    img: "https://images.unsplash.com/photo-1571997478779-2adcbbe9ab2f?w=600",
+    badge: "🍕 Clásica"
+  },
+  {
+    id: 8,
+    name: "Familiar",
+    desc: "Pizza grande para compartir en familia, masa artesanal",
+    price: 2500,
+    img: "https://images.unsplash.com/photo-1513104890138-7c749659a591?w=600",
+    badge: "👨‍👩‍👧 Familiar"
+  },
+  {
+    id: 9,
+    name: "Familiar Doble Queso",
+    desc: "Nuestra familiar con el doble de queso mozzarella derretido",
+    price: 3000,
+    img: "https://images.unsplash.com/photo-1541745537411-b8046dc6d66c?w=600",
+    badge: "⭐ Especial"
+  }
+];
+
+let cart = [];
+
+// Renderizar menú
+function renderMenu() {
+  const grid = document.getElementById('pizzaGrid');
+  grid.innerHTML = pizzas.map(p => `
+    <div class="pizza-card">
+      ${p.badge ? `<span class="badge">${p.badge}</span>` : ''}
+      <img src="${p.img}" alt="${p.name}" loading="lazy">
+      <div class="pizza-info">
+        <h4>${p.name}</h4>
+        <p>${p.desc}</p>
+        <div class="price-row">
+          <span class="price">$${p.price}</span>
+          <button class="add-btn" onclick="addToCart(${p.id})">Añadir</button>
+        </div>
+      </div>
+    </div>
+  `).join('');
+}
+
+function addToCart(id) {
+  const pizza = pizzas.find(p => p.id === id);
+  const existing = cart.find(c => c.id === id);
+  if (existing) existing.qty++;
+  else cart.push({ ...pizza, qty: 1 });
+  updateCart();
+  showToast(`🍕 ${pizza.name} añadida`);
+}
+
+function changeQty(id, delta) {
+  const item = cart.find(c => c.id === id);
+  if (!item) return;
+  item.qty += delta;
+  if (item.qty <= 0) cart = cart.filter(c => c.id !== id);
+  updateCart();
+}
+
+function updateCart() {
+  const count = cart.reduce((s, c) => s + c.qty, 0);
+  const total = cart.reduce((s, c) => s + c.qty * c.price, 0);
+  document.getElementById('cartCount').textContent = count;
+  document.getElementById('cartTotal').textContent = total;
+
+  const container = document.getElementById('cartItems');
+  if (cart.length === 0) {
+    container.innerHTML = '<p class="empty-cart">Tu carrito está vacío 🍕</p>';
+    return;
+  }
+  container.innerHTML = cart.map(c => `
+    <div class="cart-item">
+      <div class="cart-item-info">
+        <strong>${c.name}</strong>
+        <small>$${c.price} c/u</small>
+      </div>
+      <div class="qty-controls">
+        <button onclick="changeQty(${c.id}, -1)">−</button>
+        <span>${c.qty}</span>
+        <button onclick="changeQty(${c.id}, 1)">+</button>
+      </div>
+    </div>
+  `).join('');
+}
+
+function toggleCart() {
+  document.getElementById('cartPanel').classList.toggle('open');
+  document.getElementById('overlay').classList.toggle('show');
+}
+
+function checkout() {
+  if (cart.length === 0) {
+    showToast('❌ El carrito está vacío');
+    return;
+  }
+  let msg = '🍕 *Nuevo pedido - Bella Napoli*\n\n';
+  cart.forEach(c => {
+    msg += `• ${c.qty}x ${c.name} — $${c.qty * c.price}\n`;
+  });
+  const total = cart.reduce((s, c) => s + c.qty * c.price, 0);
+  msg += `\n*TOTAL: $${total}*`;
+  const url = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(msg)}`;
+  window.open(url, '_blank');
+}
+
+function showToast(text) {
+  const t = document.getElementById('toast');
+  t.textContent = text;
+  t.classList.add('show');
+  clearTimeout(t._timer);
+  t._timer = setTimeout(() => t.classList.remove('show'), 2000);
+}
+
+renderMenu();
+updateCart();
+</script>
+</body>
+</html>
